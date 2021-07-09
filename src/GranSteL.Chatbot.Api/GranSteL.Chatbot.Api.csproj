@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GranSteL.Chatbot.Models\GranSteL.Chatbot.Models.csproj" />
     <ProjectReference Include="..\GranSteL.Chatbot.Services\GranSteL.Chatbot.Services.csproj" />
+    <ProjectReference Include="..\GranSteL.Chatbot.Messengers.Yandex\GranSteL.Chatbot.Messengers.Yandex.csproj" />
   </ItemGroup>
 
   <ItemGroup>

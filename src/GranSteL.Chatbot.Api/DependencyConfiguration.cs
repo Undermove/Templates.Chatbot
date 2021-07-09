@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using GranSteL.Chatbot.Api.DependencyModules;
 using GranSteL.Chatbot.Services.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace GranSteL.Chatbot.Api
 {
@@ -16,8 +19,14 @@ namespace GranSteL.Chatbot.Api
         internal static IContainer Configure(IServiceCollection services, IConfiguration appConfiguration)
         {
             var containerBuilder = new ContainerBuilder();
+            // Так работает
+            // services.AddHostedService<HostedService>();
+            // services.AddHostedService<HostedService1>();
 
             containerBuilder.Populate(services);
+            // И так работает
+            // containerBuilder.RegisterType<HostedService>().As<IHostedService>();
+            // containerBuilder.RegisterType<HostedService1>().As<IHostedService>();
 
             var configuration = appConfiguration.GetSection($"{nameof(AppConfiguration)}").Get<AppConfiguration>();
             
@@ -67,6 +76,32 @@ namespace GranSteL.Chatbot.Api
             }
 
             return result.ToArray();
+        }
+    }
+
+    internal class HostedService1 : IHostedService
+    {
+        public Task StartAsync(CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
+        }
+    }
+
+    internal class HostedService : IHostedService
+    {
+        public Task StartAsync(CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
         }
     }
 }
